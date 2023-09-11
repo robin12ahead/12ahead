@@ -1,0 +1,44 @@
+/* Dark Color Sceme */
+ html {
+	 color-scheme: light;
+}
+
+@supports not (color-scheme: dark) {
+	 background: #111;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+ 
+html[data-theme="dark"] body {
+   background-color: #111;
+}
+
+html[data-theme="dark"] .text-color-accent {
+  /* color:red; */
+}
+
+html[data-theme="dark"] .button-secondary {
+  filter:invert(1)
+}
+
+html[data-theme="dark"] .button:not(.button-secondary) {
+  color: #111;
+}
+
+html[data-theme="dark"] .button:not(.button-secondary) > .button_background {
+  background-color: #F4F4F6;
+}
+
+html[data-theme="dark"] .navbar-menu .theme-toggle > .theme-icon_light {
+  display: none;
+}
+
+html[data-theme="light"] .navbar-menu .theme-toggle > .theme-icon_dark {
+  display: none;
+}
+
+html[data-theme="dark"] .hamburger .hamburger-line {
+  background-color: #FAFAFA;
+}
