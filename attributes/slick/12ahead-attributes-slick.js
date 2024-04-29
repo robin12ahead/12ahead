@@ -40,7 +40,7 @@ $(document).ready(function () {
       const currentSlideInputClass = "slick-current-nav-item";
       $(slideInputs).addClass(slideInputClass);
       $(slideInputs).removeClass(currentSlideInputClass);
-      $('.slick-nav-item:nth-of-type').addClass(currentSlideInputClass);
+      $('.slick-nav-item:first-of-type').addClass(currentSlideInputClass);
 
       $(currentSlider).slick({
         infinite: Boolean(infinite),
