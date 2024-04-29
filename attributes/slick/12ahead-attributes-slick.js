@@ -2,42 +2,42 @@ $(document).ready(function () {
 
     (function ($) {
 
-        let $slick = $('[data-slick-slider="true"]');
+        const $slick = $('[data-slick-slider="true"]');
 
         $($slick).each(function () {
           let currentSlider = $(this);
           
-            let infinite = $(this).attr("data-slick-infinite") || true;
-            let speed = $(this).attr("data-slick-speed") || 500;
-            let dots = $(this).attr("data-slick-dots") || false;
-            let arrows = $(this).attr("data-slick-arrows") || true;
-            let prevArrow = $(this).attr("data-slick-prevarrow") || '<button type="button" class="slick-prev"></button>';
-            let nextArrow = $(this).attr("data-slick-nextarrow") || '<button type="button" class="slick-next"></button>';
-            let swipeToSlide = $(this).attr("data-slick-swipetoslide") || true;
-            let autoplay = $(this).attr("data-slick-autoplay") || false;
-            let autoplaySpeed = $(this).attr("data-slick-autoplayspeed") || 4000;
-            let pauseOnHover = $(this).attr("data-slick-pauseonhover") || true;
-            let slidesToShow = $(this).attr("data-slick-slides") || 1;
-            let slidesToScroll = $(this).attr("data-slick-scroll") || 1;
-            let slidesToShowTab = $(this).attr("data-slick-slides-tab") || 1;
-            let slidesToScrollTab = $(this).attr("data-slick-scroll-tab") || 1;
-            let slidesToShowMob = $(this).attr("data-slick-slides-mob") || 1;
-            let slidesToScrollMob = $(this).attr("data-slick-scroll-mob") || 1;
-            let adaptiveHeight = $(this).attr("data-slick-adaptiveheight") || true;
-            let variableWidth = $(this).attr("data-slick-variablewidth") || false;
-            let centerMode = $(this).attr("data-slick-centermode") || false;
-            let centerPadding = $(this).attr("data-slick-centerpadding") || '50px';
+            var infinite = $(this).attr("data-slick-infinite") || true;
+            var speed = $(this).attr("data-slick-speed") || 500;
+            var dots = $(this).attr("data-slick-dots") || false;
+            var arrows = $(this).attr("data-slick-arrows") || true;
+            var prevArrow = $(this).attr("data-slick-prevarrow") || '<button type="button" class="slick-prev"></button>';
+            var nextArrow = $(this).attr("data-slick-nextarrow") || '<button type="button" class="slick-next"></button>';
+            var swipeToSlide = $(this).attr("data-slick-swipetoslide") || true;
+            var autoplay = $(this).attr("data-slick-autoplay") || false;
+            var autoplaySpeed = $(this).attr("data-slick-autoplayspeed") || 4000;
+            var pauseOnHover = $(this).attr("data-slick-pauseonhover") || true;
+            var slidesToShow = $(this).attr("data-slick-slides") || 1;
+            var slidesToScroll = $(this).attr("data-slick-scroll") || 1;
+            var slidesToShowTab = $(this).attr("data-slick-slides-tab") || 1;
+            var slidesToScrollTab = $(this).attr("data-slick-scroll-tab") || 1;
+            var slidesToShowMob = $(this).attr("data-slick-slides-mob") || 1;
+            var slidesToScrollMob = $(this).attr("data-slick-scroll-mob") || 1;
+            var adaptiveHeight = $(this).attr("data-slick-adaptiveheight") || true;
+            var variableWidth = $(this).attr("data-slick-variablewidth") || false;
+            var centerMode = $(this).attr("data-slick-centermode") || false;
+            var centerPadding = $(this).attr("data-slick-centerpadding") || '50px';
             
             let sliderGap = $(this).attr("data-slick-gap") || '0px';
             $(currentSlider).css("--slider-gap", sliderGap)
 
-            let nextSlide = $('[data-slick-control="next"]');
-            let prevSlide = $('[data-slick-control="prev"]');
+            const nextSlide = $('[data-slick-control="next"]');
+            const prevSlide = $('[data-slick-control="prev"]');
 
-            let sliderNavigation = $('[data-slick-control="navigation"]');
-            let slideInputs = $(sliderNavigation).children();
-            let slideInputClass = "slick-nav-item";
-            let currentSlideInputClass = "slick-current-nav-item";
+            const sliderNavigation = $('[data-slick-control="navigation"]');
+            const slideInputs = $(sliderNavigation).children();
+            const slideInputClass = "slick-nav-item";
+            const currentSlideInputClass = "slick-current-nav-item";
             $(slideInputs).addClass(slideInputClass);
             $(slideInputs).removeClass(currentSlideInputClass);
             $(slideInputs + ':first-of-type').addClass(currentSlideInputClass);
@@ -119,22 +119,22 @@ $(document).ready(function () {
             currentSlider.on(
               'init reInit afterChange',
               function (event, slick, currentSlide, nextSlide) {
-                var currentSlideNumer = (currentSlide ? currentSlide : 0) + 1;
+                var currentSlideNumber = (currentSlide ? currentSlide : 0) + 1;
       
-                // console.log('current slide:' + currentSlideNumer);
+                // console.log('current slide:' + currentSlideNumber);
                 $(slideInputs).removeClass(currentSlideInputClass);
                 $('[data-slick-control="navigation"]').find('.slick-nav-item:nth-of-type(' + currentSlideNumer + ')').addClass(currentSlideInputClass);
       
-                if( currentSlideNumer === slideCount ){
-                  $(nextSlide).hide();
+                if( currentSlideNumber === slideCount ){
+                  $('[data-slick-control="next"]').hide();
                 } else {
-                  $(nextSlide).show();
+                  $('[data-slick-control="next"]').show();
                 }
 
-                if (currentSlideNumer === 1) {
-                  $(prevSlide).hide();
+                if (currentSlideNumber === 1) {
+                  $('[data-slick-control="prev"]').hide();
                 } else {
-                  $(prevSlide).show();
+                  $('[data-slick-control="prev"]').show();
                 }
               }
             );
