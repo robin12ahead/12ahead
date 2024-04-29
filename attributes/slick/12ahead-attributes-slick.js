@@ -12,7 +12,7 @@ $(document).ready(function () {
             let dots = $(this).attr("data-slick-dots") || false;
             let arrows = $(this).attr("data-slick-arrows") || true;
             let prevArrow = $(this).attr("data-slick-prevarrow") || '<button type="button" class="slick-prev"></button>';
-            let nextArrow = $(this).attr("data-slick-nextarrow") || '<button type="button" class="slick-prev"></button>';
+            let nextArrow = $(this).attr("data-slick-nextarrow") || '<button type="button" class="slick-next"></button>';
             let swipeToSlide = $(this).attr("data-slick-swipetoslide") || true;
             let autoplay = $(this).attr("data-slick-autoplay") || false;
             let autoplaySpeed = $(this).attr("data-slick-autoplayspeed") || 4000;
@@ -32,7 +32,7 @@ $(document).ready(function () {
             $(currentSlider).css("--slider-gap", sliderGap)
 
             let nextSlide = $('[data-slick-control="next"]');
-            let prevSlide = $('[data-slick-control="next"]');
+            let prevSlide = $('[data-slick-control="prev"]');
 
             let sliderNavigation = $('[data-slick-control="navigation"]');
             let slideInputs = $(sliderNavigation).children();
