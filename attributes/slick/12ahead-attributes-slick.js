@@ -103,7 +103,7 @@ $(document).ready(function () {
       
               var slideInputCounter = ("0" + (index + 1)).slice(-2);
             
-              $(this).prepend('<span class="index-counter">' + slideInputCounter + '</span>')
+              // $(this).prepend('<span class="index-counter">' + slideInputCounter + '</span>')
       
               $(this).on('click', function () {
                 currentSlider.slick('goTo', index);
@@ -121,7 +121,7 @@ $(document).ready(function () {
       
                 // console.log('current slide:' + currentSlideNumer);
                 $(slideInputs).removeClass(currentSlideInputClass);
-                $(sliderNavigation).find(slideInputs + ':nth-of-type(' + currentSlideNumer + ')').addClass(currentSlideInputClass);
+                $('[data-slick-control="navigation"]').find('.slick-nav-item:nth-of-type(' + currentSlideNumer + ')').addClass(currentSlideInputClass);
       
                 if( currentSlideNumer === slideCount ){
                   $(nextSlide).hide();
