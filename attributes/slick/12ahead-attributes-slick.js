@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     (function ($) {
 
-        let $slick = $('[data-slick-slider]');
+        let $slick = $('[data-slick-slider="true"]');
 
         $($slick).each(function () {
           let currentSlider = $(this);
