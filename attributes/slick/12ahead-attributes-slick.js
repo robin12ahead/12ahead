@@ -1,12 +1,22 @@
+/**
+ * Slick slider controled by custom attributs
+ */
+
 $(document).ready(function () {
 
   (function ($) {
 
+
+    // slider selector
     const $slick = $('[data-slick-slider="true"]');
 
+    // function for every selector
     $($slick).each(function () {
+
+      // define currentslider var
       let currentSlider = $(this);
 
+      // attributes as settings
       var infinite = $(this).attr("data-slick-infinite") || true;
       var speed = $(this).attr("data-slick-speed") || 500;
       var dots = $(this).attr("data-slick-dots") || false;
@@ -28,12 +38,15 @@ $(document).ready(function () {
       var centerMode = $(this).attr("data-slick-centermode") || false;
       var centerPadding = $(this).attr("data-slick-centerpadding") || '50px';
 
+      // slider gap
       let sliderGap = $(this).attr("data-slick-gap") || '0px';
       $(currentSlider).css("--slider-gap", sliderGap)
 
+      // custom slider controls selectors
       const ControlNextSlide = $('[data-slick-control="next"]');
       const ControlPrevSlide = $('[data-slick-control="prev"]');
 
+      // slider navigation selectors
       const sliderNavigation = $('[data-slick-control="navigation"]');
       const slideInputs = $(sliderNavigation).children();
       const slideInputClass = "slick-nav-item";
@@ -42,22 +55,23 @@ $(document).ready(function () {
       $(slideInputs).removeClass(currentSlideInputClass);
       $('.slick-nav-item:first-of-type').addClass(currentSlideInputClass);
 
+      // slider settings
       $(currentSlider).slick({
-        infinite: Boolean(infinite),
+        infinite: JSON.parse(infinite),
         speed: speed,
-        dots: Boolean(dots),
-        arrows: Boolean(arrows),
+        dots: JSON.parse(dots),
+        arrows: JSON.parse(arrows),
         prevArrow: prevArrow,
         nextArrow: nextArrow,
         slidesToShow: slidesToShow,
         slidesToScroll: slidesToScroll,
-        swipeToSlide: Boolean(swipeToSlide),
-        autoplay: Boolean(autoplay),
+        swipeToSlide: JSON.parse(swipeToSlide),
+        autoplay: JSON.parse(autoplay),
         autoplaySpeed: autoplaySpeed,
-        pauseOnHover: Boolean(pauseOnHover),
-        adaptiveHeight: Boolean(adaptiveHeight),
-        variableWidth: Boolean(variableWidth),
-        centerMode: Boolean(centerMode),
+        pauseOnHover: JSON.parse(pauseOnHover),
+        adaptiveHeight: JSON.parse(adaptiveHeight),
+        variableWidth: JSON.parse(variableWidth),
+        centerMode: JSON.parse(centerMode),
         centerPadding: centerPadding,
 
         responsive: [{
@@ -65,7 +79,6 @@ $(document).ready(function () {
             settings: {
               slidesToShow: slidesToShowTab,
               slidesToScroll: slidesToScrollTab,
-              adaptiveHeight: Boolean(adaptiveHeight),
             }
           },
           {
@@ -73,7 +86,6 @@ $(document).ready(function () {
             settings: {
               slidesToShow: slidesToShowMob,
               slidesToScroll: slidesToScrollMob,
-              adaptiveHeight: Boolean(adaptiveHeight),
             }
           },
         ]
