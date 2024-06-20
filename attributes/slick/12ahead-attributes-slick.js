@@ -6,15 +6,23 @@ $(document).ready(function () {
 
   (function ($) {
 
-
     // slider selector
     const $slick = $('[data-slick-slider="true"]');
+
+    const slideInputClass = "slick-nav-item";
+    const currentSlideInputClass = "slick-current-nav-item";
+
+    const ControlNextSlide = $('[data-slick-control="next"]');
+    const ControlPrevSlide = $('[data-slick-control="prev"]');
+
+    const sliderNavigation = $('[data-slick-control="navigation"]');
 
     // function for every selector
     $($slick).each(function () {
 
       // define currentslider var
       let currentSlider = $(this);
+      let currentSliderID = $(this).attr("id");
 
       // attributes as settings
       var infinite = $(this).attr("data-slick-infinite") || true;
@@ -36,24 +44,12 @@ $(document).ready(function () {
       var adaptiveHeight = $(this).attr("data-slick-adaptiveheight") || true;
       var variableWidth = $(this).attr("data-slick-variablewidth") || false;
       var centerMode = $(this).attr("data-slick-centermode") || false;
+      var fade = $(this).attr("data-slick-fade") || false;
       var centerPadding = $(this).attr("data-slick-centerpadding") || '50px';
 
       // slider gap
       let sliderGap = $(this).attr("data-slick-gap") || '0px';
-      $(currentSlider).css("--slider-gap", sliderGap)
-
-      // custom slider controls selectors
-      const ControlNextSlide = $('[data-slick-control="next"]');
-      const ControlPrevSlide = $('[data-slick-control="prev"]');
-
-      // slider navigation selectors
-      const sliderNavigation = $('[data-slick-control="navigation"]');
-      const slideInputs = $(sliderNavigation).children();
-      const slideInputClass = "slick-nav-item";
-      const currentSlideInputClass = "slick-current-nav-item";
-      $(slideInputs).addClass(slideInputClass);
-      $(slideInputs).removeClass(currentSlideInputClass);
-      $('.slick-nav-item:first-of-type').addClass(currentSlideInputClass);
+      $(currentSlider).css("--slider-gap", sliderGap)      
 
       // slider settings
       $(currentSlider).slick({
@@ -73,6 +69,7 @@ $(document).ready(function () {
         variableWidth: JSON.parse(variableWidth),
         centerMode: JSON.parse(centerMode),
         centerPadding: centerPadding,
+        fade: JSON.parse(fade),
 
         responsive: [{
             breakpoint: 991,
@@ -94,49 +91,16 @@ $(document).ready(function () {
       // get amount of slides
       var slideCount = currentSlider.slick('getSlick').slideCount;
 
-      // get amount of slick nav items
-      var slideInputCount = $(slideInputs).length;
-
-      // go to next slide on click
-      $(ControlNextSlide).each(function () {
-        $(this).on('click', function () {
-          $(currentSlider).slick('slickNext');
-        })
-      });
-
-      // go to prev slide on click
-      $(ControlPrevSlide).each(function () {
-        $(this).on('click', function () {
-          $(currentSlider).slick('slickPrev');
-        })
-      });
-
-      // custom slick navigation
-      $(slideInputs).each(function (index) {
-
-        var slideInputCounter = ("0" + (index + 1)).slice(-2);
-
-        // $(this).prepend('<span class="index-counter">' + slideInputCounter + '</span>')
-
-        $(this).on('click', function () {
-          currentSlider.slick('goTo', index);
-          $(slideInputs).removeClass(currentSlideInputClass);
-          $(this).addClass(currentSlideInputClass);
-        });
-
-      });
-
       // functions when slick slider changes
       currentSlider.on(
         'init reInit afterChange',
         function (event, slick, currentSlide, nextSlide) {
           var currentSlideNumber = (currentSlide ? currentSlide : 0) + 1;
 
-          // console.log('current slide:' + currentSlideNumber);
-          $(slideInputs).removeClass(currentSlideInputClass);
-          $('[data-slick-control="navigation"]').find('.slick-nav-item:nth-of-type(' + currentSlideNumber + ')').addClass(currentSlideInputClass);
+          $('[data-slick-control-target="' + currentSliderID +'"]').children().removeClass(currentSlideInputClass);
+          $('[data-slick-control-target="' + currentSliderID +'"]').find('.slick-nav-item:nth-of-type(' + currentSlideNumber + ')').addClass(currentSlideInputClass);
 
-          if (infinite === false) {
+          if (JSON.parse(infinite) === false) {
             if (currentSlideNumber === slideCount) {
               $('[data-slick-control="next"]').hide();
             } else {
@@ -151,9 +115,72 @@ $(document).ready(function () {
           }
         }
       );
+ 
+    }); // end slick functions
 
+    // Custom slider controls
+    $(sliderNavigation).each(function () {
+
+      var slideInputs = $(this).children();
+      var navigationTarget = $(this).attr("data-slick-control-target");
+      var navigationTarget = $(this).attr("data-slick-control-target");
+
+      var slideInputCount = $(slideInputs).length;
+
+      $(slideInputs).addClass(slideInputClass);
+      $(slideInputs).removeClass(currentSlideInputClass);
+      $('.slick-nav-item:first-of-type').addClass(currentSlideInputClass);
+
+      $(slideInputs).each(function (index) {
+
+        var slideInputsAmount = ("0" + (index + 1)).slice(-2);
+        // $(this).prepend('<span class="index-counter">' + slideInputsAmount + '</span>')
+
+        $(this).on('click', function () {
+          $('#' + navigationTarget).slick('goTo', index);
+          $(slideInputs).removeClass(currentSlideInputClass);
+          $(this).addClass(currentSlideInputClass);
+        });
+
+      });
     });
 
+    // custom slider Arrows
+    var ControlTarget = "";
+
+    // go to next slide on click
+    $(ControlNextSlide).each(function () {
+      $(this).on('click', function () {
+        ControlTarget = $(this).attr("data-slick-control-target");
+        $('#' + ControlTarget).slick('slickNext');
+      })
+    });
+
+    // go to prev slide on click
+    $(ControlPrevSlide).each(function () {
+      $(this).on('click', function () {
+        ControlTarget = $(this).attr("data-slick-control-target");
+        $('#' + ControlTarget).slick('slickPrev');
+      })
+    });
+
+
   })(jQuery);
+  
+  // Styles
+  var styles = `
+  .slick-slider.slick-initialized .slick-list {
+    margin-left: calc((var(--slider-gap) / 2) * -1);
+    margin-right: calc((var(--slider-gap) / 2) * -1);
+  }
+  
+  .slick-slider.slick-initialized .slick-slide {
+    margin: 0 calc(var(--slider-gap) / 2);
+  }
+  `
+  
+  var styleSheet = document.createElement("style")
+  styleSheet.innerText = styles
+  document.head.appendChild(styleSheet)
 
 });
