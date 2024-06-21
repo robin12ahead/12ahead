@@ -98,21 +98,21 @@ $(document).ready(function () {
           var currentSlideNumber = (currentSlide ? currentSlide : 0) + 1;
 
           $('[data-slick-control-target="' + currentSliderID +'"]').children().removeClass(currentSlideInputClass);
-          $('[data-slick-control-target="' + currentSliderID +'"]').find('.slick-nav-item:nth-of-type(' + currentSlideNumber + ')').addClass(currentSlideInputClass);
+          $('[data-slick-control-target="' + currentSliderID +'"]').find('.' + slideInputClass + ':nth-of-type(' + currentSlideNumber + ')').addClass(currentSlideInputClass);
 
-          if (JSON.parse(infinite) === false) {
-            if (currentSlideNumber === slideCount) {
-              $('[data-slick-control="next"]').hide();
-            } else {
-              $('[data-slick-control="next"]').show();
-            }
+          // if (JSON.parse(infinite) === false) {
+          //   if (currentSlideNumber === slideCount) {
+          //     $('[data-slick-control="next"]').hide();
+          //   } else {
+          //     $('[data-slick-control="next"]').show();
+          //   }
 
-            if (currentSlideNumber === 1) {
-              $('[data-slick-control="prev"]').hide();
-            } else {
-              $('[data-slick-control="prev"]').show();
-            }
-          }
+          //   if (currentSlideNumber === 1) {
+          //     $('[data-slick-control="prev"]').hide();
+          //   } else {
+          //     $('[data-slick-control="prev"]').show();
+          //   }
+          // }
         }
       );
  
@@ -147,12 +147,16 @@ $(document).ready(function () {
 
     // custom slider Arrows
     var ControlTarget = "";
+    var controlDelay = 0;
 
     // go to next slide on click
     $(ControlNextSlide).each(function () {
       $(this).on('click', function () {
         ControlTarget = $(this).attr("data-slick-control-target");
-        $('#' + ControlTarget).slick('slickNext');
+        controlDelay = $(this).attr("data-slick-control-delay") || 0;
+        setTimeout(function() {
+          $('#' + ControlTarget).slick('slickNext');
+        }, controlDelay);
       })
     });
 
@@ -160,7 +164,10 @@ $(document).ready(function () {
     $(ControlPrevSlide).each(function () {
       $(this).on('click', function () {
         ControlTarget = $(this).attr("data-slick-control-target");
-        $('#' + ControlTarget).slick('slickPrev');
+        controlDelay = $(this).attr("data-slick-control-delay") || 0;
+        setTimeout(function() {
+          $('#' + ControlTarget).slick('slickPrev');
+        }, controlDelay);
       })
     });
 
