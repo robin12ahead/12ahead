@@ -34,7 +34,7 @@ $(document).ready(function () {
       var swipeToSlide = $(this).attr("data-slick-swipetoslide") || true;
       var autoplay = $(this).attr("data-slick-autoplay") || false;
       var autoplaySpeed = $(this).attr("data-slick-autoplayspeed") || 4000;
-      var pauseOnHover = $(this).attr("data-slick-pauseonhover") || true;
+      var pauseOnHover = $(this).attr("data-slick-pauseonhover") || false;
       var slidesToShow = $(this).attr("data-slick-slides") || 1;
       var slidesToScroll = $(this).attr("data-slick-scroll") || 1;
       var slidesToShowTab = $(this).attr("data-slick-slides-tab") || 1;
@@ -49,7 +49,7 @@ $(document).ready(function () {
 
       // slider gap
       let sliderGap = $(this).attr("data-slick-gap") || '0px';
-      $(currentSlider).css("--slider-gap", sliderGap)      
+      $(currentSlider).css("--slider-gap", sliderGap)
 
       // slider settings
       $(currentSlider).slick({
@@ -65,6 +65,7 @@ $(document).ready(function () {
         autoplay: JSON.parse(autoplay),
         autoplaySpeed: autoplaySpeed,
         pauseOnHover: JSON.parse(pauseOnHover),
+        pauseOnFocus: JSON.parse(pauseOnHover),
         adaptiveHeight: JSON.parse(adaptiveHeight),
         variableWidth: JSON.parse(variableWidth),
         centerMode: JSON.parse(centerMode),
@@ -97,8 +98,8 @@ $(document).ready(function () {
         function (event, slick, currentSlide, nextSlide) {
           var currentSlideNumber = (currentSlide ? currentSlide : 0) + 1;
 
-          $('[data-slick-control-target="' + currentSliderID +'"]').children().removeClass(currentSlideInputClass);
-          $('[data-slick-control-target="' + currentSliderID +'"]').find('.' + slideInputClass + ':nth-of-type(' + currentSlideNumber + ')').addClass(currentSlideInputClass);
+          $('[data-slick-control-target="' + currentSliderID + '"]').children().removeClass(currentSlideInputClass);
+          $('[data-slick-control-target="' + currentSliderID + '"]').find('.' + slideInputClass + ':nth-of-type(' + currentSlideNumber + ')').addClass(currentSlideInputClass);
 
           // if (JSON.parse(infinite) === false) {
           //   if (currentSlideNumber === slideCount) {
@@ -115,17 +116,17 @@ $(document).ready(function () {
           // }
         }
       );
- 
+
     }); // end slick functions
 
     // Custom slider controls
     $(sliderNavigation).each(function () {
 
       var slideInputs = $(this).children();
-      var navigationTarget = $(this).attr("data-slick-control-target");
-      var navigationTarget = $(this).attr("data-slick-control-target");
-
       var slideInputCount = $(slideInputs).length;
+
+      var navigationTarget = $(this).attr("data-slick-control-target");
+      var controlDelay = $(this).attr("data-slick-control-delay") || 0;
 
       $(slideInputs).addClass(slideInputClass);
       $(slideInputs).removeClass(currentSlideInputClass);
@@ -137,7 +138,10 @@ $(document).ready(function () {
         // $(this).prepend('<span class="index-counter">' + slideInputsAmount + '</span>')
 
         $(this).on('click', function () {
-          $('#' + navigationTarget).slick('goTo', index);
+          setTimeout(function () {
+            $('#' + navigationTarget).slick('goTo', index);
+          }, controlDelay);
+
           $(slideInputs).removeClass(currentSlideInputClass);
           $(this).addClass(currentSlideInputClass);
         });
@@ -154,7 +158,7 @@ $(document).ready(function () {
       $(this).on('click', function () {
         ControlTarget = $(this).attr("data-slick-control-target");
         controlDelay = $(this).attr("data-slick-control-delay") || 0;
-        setTimeout(function() {
+        setTimeout(function () {
           $('#' + ControlTarget).slick('slickNext');
         }, controlDelay);
       })
@@ -165,7 +169,7 @@ $(document).ready(function () {
       $(this).on('click', function () {
         ControlTarget = $(this).attr("data-slick-control-target");
         controlDelay = $(this).attr("data-slick-control-delay") || 0;
-        setTimeout(function() {
+        setTimeout(function () {
           $('#' + ControlTarget).slick('slickPrev');
         }, controlDelay);
       })
@@ -173,7 +177,7 @@ $(document).ready(function () {
 
 
   })(jQuery);
-  
+
   // Styles
   var styles = `
   .slick-slider.slick-initialized .slick-list {
@@ -185,7 +189,7 @@ $(document).ready(function () {
     margin: 0 calc(var(--slider-gap) / 2);
   }
   `
-  
+
   var styleSheet = document.createElement("style")
   styleSheet.innerText = styles
   document.head.appendChild(styleSheet)
