@@ -77,6 +77,7 @@ $(document).ready(function () {
             settings: {
               slidesToShow: slidesToShowTab,
               slidesToScroll: slidesToScrollTab,
+              pauseOnFocus: false,
             }
           },
           {
@@ -84,6 +85,7 @@ $(document).ready(function () {
             settings: {
               slidesToShow: slidesToShowMob,
               slidesToScroll: slidesToScrollMob,
+              pauseOnFocus: false,
             }
           },
         ]
