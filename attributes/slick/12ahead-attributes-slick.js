@@ -65,7 +65,7 @@ $(document).ready(function () {
         autoplay: JSON.parse(autoplay),
         autoplaySpeed: autoplaySpeed,
         pauseOnHover: JSON.parse(pauseOnHover),
-        pauseOnFocus: JSON.parse(pauseOnHover),
+        pauseOnFocus: false,
         adaptiveHeight: JSON.parse(adaptiveHeight),
         variableWidth: JSON.parse(variableWidth),
         centerMode: JSON.parse(centerMode),
