@@ -2,7 +2,7 @@
  * Add floating placeholder label to all form fields
  */
 
-$('[data-floating-placeholders="true"]').find('input, select, textarea, .w-imput, .form_input').each(function () {
+$('.w-form[data-floating-placeholders="true"]').find('.w-input, .form_input').each(function () {
 
     var placeholderClassName = 'form_placeholder';
 
