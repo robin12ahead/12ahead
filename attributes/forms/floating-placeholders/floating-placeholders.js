@@ -5,10 +5,9 @@
 $('[data-floating-placeholders="true"]').find('input, select, textarea, .w-imput, .form_input').each(function () {
 
     var placeholderClassName = 'form_placeholder';
-    var placeholderClass = '.' + placeholderClassName;
 
     // remove all test placeholders beforehand
-    $(this).parent().find(placeholderClass).remove();
+    $(this).parent().find("." + placeholderClassName).remove();
 
     // get the correct placeholder text
     let placeholder_text = "";
@@ -25,15 +24,15 @@ $('[data-floating-placeholders="true"]').find('input, select, textarea, .w-imput
     $(this).before(placeholder_html);
 
     // hide all placeholders
-    $(placeholderClass).hide();
-    $('input[type="date"]').parent().find(placeholderClass).show();
+    $("." + placeholderClassName).hide();
+    $('input[type="date"]').parent().find("." + placeholderClassName).show();
 
     // show each placeholder if input is filled
     $(this).on('input', function (e) {
         if ($(this).val()) {
-            $(this).parent().find(placeholderClass).show();
+            $(this).parent().find("." + placeholderClassName).show();
         } else {
-            $(this).parent().find(placeholderClass).hide();
+            $(this).parent().find("." + placeholderClassName).hide();
         }
     });
 });
