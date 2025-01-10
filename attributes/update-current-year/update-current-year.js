@@ -8,5 +8,6 @@ $(document).ready(function () {
 
     // override text with the current yar
     $('span.current-year').text(currentYear);
+    $('[data-update-current-year="true"]').text(currentYear);
 
 });
