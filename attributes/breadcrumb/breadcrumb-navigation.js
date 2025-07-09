@@ -33,10 +33,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // Prevent duplicate breadcrumbs by checking if they already exist
   // const breadcrumbContainer = document.querySelector('.breadcrumb-container');
   let breadcrumbContainer = $('[data-breadcrumb="container"]');
-  let breadcrumbHometext = $(this).attr("data-breadcrumb-hometext") || "Home";
 
   // repeat function for every selector
   breadcrumbContainer.each(function () {
+
+    let breadcrumbHometext = $(this).attr("data-breadcrumb-hometext") || "Home";
 
     // if (breadcrumbContainer && !breadcrumbContainer.innerHTML) { // Proceed only if the container is empty
   
