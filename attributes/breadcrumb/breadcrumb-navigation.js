@@ -15,12 +15,13 @@ document.addEventListener('DOMContentLoaded', function() {
     ue: 'ü',
     Ae: 'Ä',
     Oe: 'Ö',
-    Ue: 'Ü'
+    Ue: 'Ü',
+    ozl: 'OZL'
   };
 
   // Replace ae/oe/ue with umlauts
   const withUmlauts = str.replace(/\b\w+\b/g, word => {
-    return word.replace(/Ae|ae|Oe|oe|Ue|ue/g, match => umlautMap[match] || match);
+    return word.replace(/Ae|ae|Oe|oe|Ue|ue|ozl/g, match => umlautMap[match] || match);
   });
 
   // Capitalize each word
