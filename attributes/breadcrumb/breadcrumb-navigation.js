@@ -1,6 +1,6 @@
 $ = jQuery;
 
-// Add fully automatic breadcrumb navigation
+// Function to add fully automatic breadcrumb navigation via attributes
 document.addEventListener('DOMContentLoaded', function() {
 
   // Capitalize the first letter of each word
@@ -16,12 +16,13 @@ document.addEventListener('DOMContentLoaded', function() {
     Ae: 'Ä',
     Oe: 'Ö',
     Ue: 'Ü',
-    ozl: 'OZL'
+    ozl: 'OZL',
+    aktuelles: 'Aktuelles'
   };
 
   // Replace ae/oe/ue with umlauts
   const withUmlauts = str.replace(/\b\w+\b/g, word => {
-    return word.replace(/Ae|ae|Oe|oe|Ue|ue|ozl/g, match => umlautMap[match] || match);
+    return word.replace(/Ae|ae|Oe|oe|Ue|ue|ozl|aktuelles/g, match => umlautMap[match] || match);
   });
 
   // Capitalize each word
