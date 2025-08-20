@@ -1,52 +1,54 @@
 /*
-* Adaptive Webflow Slider height adjustment
-*/
+ * Adaptive Webflow Slider height adjustment
+ */
+
+$ = jQuery;
 
 $(document).ready(function () {
 
     // selector for mutationsObserver
-    const sliderElement =  $('.w-slider[data-slider-adaptiveheight="true"]');
+    const sliders = $('.w-slider[data-slider-adaptiveheight="true"]');
 
-    $(sliderElement).each(function () {
+    // Keep track of all observers
+    const observers = [];
 
-        var currentSlider = $(this);
-        var elements = $(this).find('.w-slide');
+    sliders.each(function () {
+        const currentSlider = $(this);
 
-        // Define a callback function to handle mutations
-        const mutationCallback = function (mutationsList, observer) {
+        const mutationCallback = function (mutationsList) {
+            mutationsList.forEach(mutation => {
+                if (mutation.type === "attributes" && mutation.attributeName === "aria-hidden") {
+                    // console.log("slider changed");
 
-            $(currentSlider).css("height", "auto");
+                    currentSlider.css("height", "auto");
 
-            $(elements).each(function () {
-
-                // var ariaHidden = $(this).attr('aria-hidden');
-
-                if ( $(this).attr('aria-hidden') !== 'true') {
-                    
-                    var currentSlideHeight = $(this).outerHeight();
-                    // console.log("slide-item height: " + currentSlideHeight);
-
-                    $(currentSlider).css("height", currentSlideHeight);
+                    currentSlider.find('.w-slide').each(function () {
+                        if ($(this).attr('aria-hidden') !== 'true') {
+                            const currentSlideHeight = $(this).outerHeight();
+                            // console.log("slide-item height: " + currentSlideHeight);
+                            currentSlider.css("height", currentSlideHeight);
+                        }
+                    });
                 }
-
             });
         };
 
-        // Iterate over each element and attach MutationObserver
-        elements.each(function () {
-            const observer = new MutationObserver(mutationCallback);
+        const observer = new MutationObserver(mutationCallback);
 
-            // Configure the observer to listen to specific types of mutations
-            const config = {
-                attributes: true,
-                attributeFilter: ['aria-hidden'],
-                // childList: false,
-                // subtree: false,
-            };
-
-            // Start observing the target node for configured mutations
-            observer.observe(this, config);
+        // Observe all descendants for aria-hidden changes
+        observer.observe(currentSlider[0], {
+            attributes: true,
+            attributeFilter: ['aria-hidden'],
+            subtree: true
         });
+
+        // Store observer for cleanup later
+        observers.push(observer);
     });
 
+    // Disconnect all observers on page unload
+    $(window).on("unload beforeunload", function () {
+        observers.forEach(observer => observer.disconnect());
+        // console.log("All MutationObservers disconnected.");
+    });
 });
