@@ -65,7 +65,16 @@ document.addEventListener('DOMContentLoaded', function() {
   
         // Add the last segment as plain text (current page) without a link
         const lastSegment = capitalizeWords(currentURL[currentURL.length - 1].replace(/-/g, ' '));
-        breadcrumbHTML += ` <span class="breadcrumb-separator">&gt;</span> <span class="breadcrumb-current">${lastSegment}</span>`;
+
+        if ( $(this).attr("data-breadcrumb-current") ) {
+          var currentName = $(this).attr('data-breadcrumb-current');
+        } else if ($(this).attr('data-breadcrumb-usetitle') === "true") {
+          var currentName = $(document).attr('title');
+        } else {
+          var currentName = lastSegment;
+        }
+
+        breadcrumbHTML += ` <span class="breadcrumb-separator">&gt;</span> <span class="breadcrumb-current">${currentName}</span>`;
         
         // Insert the generated breadcrumb HTML into the container
         this.innerHTML = breadcrumbHTML;
