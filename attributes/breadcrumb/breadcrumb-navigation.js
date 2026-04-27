@@ -70,8 +70,10 @@ document.addEventListener('DOMContentLoaded', function() {
           var currentName = $(this).attr('data-breadcrumb-current');
         } else if ($(this).attr('data-breadcrumb-usetitle') === "true") {
           var currentName = $(document).attr('title');
-        } else {
+        } else if ($(this).attr('data-breadcrumb-useurl') === "true") {
           var currentName = lastSegment;
+        } else {
+          var currentName = $(this).find('.breadcrumb-current').innerHTML();
         }
 
         breadcrumbHTML += ` <span class="breadcrumb-separator">&gt;</span> <span class="breadcrumb-current">${currentName}</span>`;
